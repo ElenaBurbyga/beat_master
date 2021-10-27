@@ -7,24 +7,34 @@ from os import listdir, remove
 from os.path import isfile, join
 
 
-MIDI_DIR = '../Music'
+MIDI_DIR = '../Music3'
 
 def get_bad_files(files, channel=9):
     bad_files = []
     for file in files:
-        mp = MidiProcessor(MIDI_DIR + '/' + file)
+        try:
+            mp = MidiProcessor(MIDI_DIR + '/' + file)
+        except:
+            bad_files.append(file)
+            continue
+            
         found = False
+        if mp is None:
+            bad_files.append(file)
+            print('here: ', file)
+            next
+            
         for i in range(len(mp.midi.tracks)):
             if mp.midi.tracks[i][0].channel == channel:
                 found = True
 
         if not found:
-            bad_files.append(song)
+            bad_files.append(file)
     return bad_files
 
 def remove_files(files):
     for file in files:
-        remove(FILES_DIR + '/' + file)
+        remove(MIDI_DIR + '/' + file)
         
 
 def get_files():
@@ -39,7 +49,6 @@ def get_good_files(channel=9):
     
 class MidiProcessor:
     def __init__(self, midi_dir):
-
         self.midi_dir = midi_dir
         self.midi = MidiFile(self.midi_dir)
         self.drum_track_ind = [i for i in range(len(self.midi.tracks)) if self.midi.tracks[i][0].channel == 9][0]
