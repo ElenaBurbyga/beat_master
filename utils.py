@@ -7,13 +7,13 @@ from os import listdir, remove
 from os.path import isfile, join
 
 
-MIDI_DIR = '../Music3'
+MIDI_DIR = '../Music'
 
-def get_bad_files(files, channel=9):
+def get_bad_files(files, folder=MIDI_DIR, channel=9,):
     bad_files = []
     for file in files:
         try:
-            mp = MidiProcessor(MIDI_DIR + '/' + file)
+            mp = MidiProcessor(folder + '/' + file)
         except:
             bad_files.append(file)
             continue
@@ -32,17 +32,17 @@ def get_bad_files(files, channel=9):
             bad_files.append(file)
     return bad_files
 
-def remove_files(files):
+def remove_files(files,folder=MIDI_DIR):
     for file in files:
         remove(MIDI_DIR + '/' + file)
         
 
-def get_files():
-    return [f for f in listdir(MIDI_DIR) if isfile(join(MIDI_DIR, f))]
+def get_files(folder=MIDI_DIR):
+    return [f for f in listdir(folder) if isfile(join(folder, f))]
     
-def get_good_files(channel=9):
-    file_list = get_files()
-    remove_files(get_bad_files(file_list,channel))
+def get_good_files(folder=MIDI_DIR, channel=9):
+    file_list = get_files(folder)
+    remove_files(get_bad_files(file_list,folder,channel))
     
     return get_files()
     
