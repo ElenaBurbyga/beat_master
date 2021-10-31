@@ -26,7 +26,11 @@ In very simple words I created a data set, where features were instruments, and 
 Files:
 
 Utils - contains all the helpfull functions used in my project.
+
 Model - contains LSTM an BiLSTM models architecture.
-train_LSTM - LSTM training. 
-train_BiLSTM - BiLSTM trainig.
+
+train_LSTM - LSTM model training. 
+
+train_BiLSTM - BiLSTM model trainig.
+
 generate_track – contains the processes of generating music tracks from array gotten from trained model. 
